@@ -111,7 +111,7 @@ Links:
 
 
 %prep
-%setup -q -n %{name}-%{version}
+%autosetup -n %{name}-%{version}/upstream -p1
 
 # lame-field-width-fix.patch
 %patch0 -p1
