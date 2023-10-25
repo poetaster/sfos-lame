@@ -1,0 +1,120 @@
+Name: lame
+Summary: The LAME MP3 encoder
+Version: 3.100
+Release: 0
+Group: Applications/Multimedia
+License: LGPL-2.0-or-later
+URL: https://lame.sourceforge.net/
+Sources:
+    - http://prdownloads.sourceforge.net/lame/lame-%{version}.tar.gz
+    - lame-rpmlintrc
+    - baselibs.conf
+Patches:
+    - lame-field-width-fix.patch
+Description: |
+    LAME is an educational tool to be used for learning about MP3 encoding.
+    The goal of the LAME project is to use the open source model to improve the
+    psycho acoustics, noise shaping and speed of MP3.
+    Another goal of the LAME project is to use these improvements for the basis of
+    a patent free audio compression codec for the GNU project.
+
+    %if "%{?vendor}" == "chum"
+    Title: LAME
+    Type: console-application
+    PackagedBy: nephros
+    Categories:
+     - Multimedia
+     - Sound
+    PackageIcon: https://sourceforge.net/p/lame/svn/HEAD/tree/trunk/logo/logofull.svg?format=raw
+    Links:
+      Homepage: %{url}
+      Bugtracker: https://sourceforge.net/p/lame/_list/tickets
+    %endif
+
+
+Requires:
+    - libmp3lame%{sover} >= %{version}
+Macros: 
+    - 'sover;0'
+PkgBR:
+    - autoconf
+    - automake
+    - libtool
+    - pkgconfig
+    - nasm
+PkgConfigBR:
+    # gtk+-2.0
+    - ncurses
+Configure: none
+Builder: none
+Check: yes
+Files:
+  - '%{_bindir}/lame'
+SubPackages:
+    - Name: doc
+      Summary: Documentation for the LAME MP3 encoder
+      Group: Applications/Multimedia
+      Description: |
+          LAME is an encoder that converts audio to the MP3 file format. It has
+          an improved psychoacoustic model and performs well in codec listening
+          tests.
+      Requires:
+          - "%{name} = %{version}"
+      Files:
+        - '%{_mandir}/man1/lame.1%{?ext_man}'
+        - '%{_defaultdocdir}/%{name}'
+
+    - Name: libmp3lame%{sover}
+      AsWholeName: yes
+      Summary: The LAME MP3 encoder library
+      Group: System/Libraries
+      Description: |
+          LAME is an encoder that converts audio to the MP3 file format. It has
+          an improved psychoacoustic model and performs well in codec listening
+          tests.
+      Files:
+        - '%license COPYING LICENSE'
+        - '%{_libdir}/libmp3lame.so.%{sover}'
+        - '%{_libdir}/libmp3lame.so.%{sover}.*'
+
+    - Name: libmp3lame-devel
+      AsWholeName: yes
+      Summary: Development files for the LAME MP3 encoder
+      Group: Development/Libraries
+      Description: Contains the header files for use with LAMEs encoding library.
+      Requires:
+          - libmp3lame%{sover} = %{version}
+      Files:
+        - '%doc API HACKING STYLEGUIDE'
+        - '%{_includedir}/lame/'
+        - '%{_libdir}/libmp3lame.so'
+        - '%{_libdir}/pkgconfig/*pc'
+
+    - Name: mp3rtp
+      Summary: MP3 Encoder for RTP Streaming
+      Group: Applications/Multimedia
+      Description: |
+          LAME is an encoder that converts audio to the MP3 file format. It has
+          an improved psychoacoustic model and performs well in codec listening
+          tests.
+
+          This package includes "mp3rtp", an MP3 encoder with RTP streaming of the output.
+
+          %if "%{?vendor}" == "chum"
+          Title: Lame mp3rtp
+          Type: console-application
+          PackagedBy: nephros
+          Categories:
+           - Multimedia
+           - Sound
+          PackageIcon: https://sourceforge.net/p/lame/svn/HEAD/tree/trunk/logo/logofull.svg?format=raw
+          Links:
+            Homepage: %{url}
+            Bugtracker: https://sourceforge.net/p/lame/_list/tickets
+          %endif
+
+      Requires:
+          - libmp3lame%{sover} >= %{version}
+      Files:
+        - '%{_bindir}/mp3rtp'
+
