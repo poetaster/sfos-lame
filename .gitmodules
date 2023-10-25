@@ -1,0 +1,7 @@
+[submodule "upstream"]
+	path = upstream
+    url = https://github.com/poetaster/lame
+
+[submodule "lame"]
+	path = lame
+	url = https://github.com/poetaster/lame
