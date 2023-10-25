@@ -18,7 +18,6 @@ URL:        https://lame.sourceforge.net/
 Source0:    http://prdownloads.sourceforge.net/lame/lame-%{version}.tar.gz
 Source1:    lame-rpmlintrc
 Source2:    baselibs.conf
-Source100:  lame.yaml
 Patch0:     lame-field-width-fix.patch
 Requires:   libmp3lame%{sover} >= %{version}
 BuildRequires:  pkgconfig(ncurses)
@@ -111,7 +110,7 @@ Links:
 
 
 %prep
-%autosetup -n %{name}-%{version}/upstream -p1
+%setup -q -n %{name}-%{version}/upstream
 
 # lame-field-width-fix.patch
 %patch0 -p1
